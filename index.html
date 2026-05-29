@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Випускний Квест для Найкращої</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 50%, #fecdd3 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #4c1d95;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(225, 29, 72, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(251, 113, 133, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #be123c;
+            margin-bottom: 20px;
+            font-size: 26px;
+        }
+
+        h2 {
+            color: #4c1d95;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #4c1d95;
+        }
+
+        .subject-badge {
+            display: inline-block;
+            background: #ffe4e6;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #be123c;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #fda4af;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            background: #fff5f5;
+        }
+
+        input[type="text"]:focus {
+            border-color: #be123c;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(190, 18, 60, 0.1);
+        }
+
+        button {
+            background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(225, 29, 72, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .error-msg {
+            color: #e11d48;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .timer-display {
+            font-size: 54px;
+            font-weight: bold;
+            color: #e11d48;
+            margin-top: 20px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 3px solid white;
+            box-shadow: 0 8px 20px rgba(225, 29, 72, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .poem-container {
+            background: linear-gradient(135deg, #fff5f5 0%, #fff1f2 100%);
+            border-left: 4px solid #f43f5e;
+            padding: 25px;
+            border-radius: 16px;
+            text-align: left;
+            white-space: pre-line;
+            font-style: italic;
+            margin-top: 25px;
+            font-size: 17px;
+            line-height: 1.8;
+            color: #4c1d95;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Обновленные стили продвинутого музыкального плеера */
+        .audio-player {
+            margin-top: 20px;
+            background: #fff0f2;
+            padding: 12px 25px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            border: 1px dashed #f43f5e;
+        }
+
+        .player-btn {
+            background: #e11d48;
+            color: white;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(225, 29, 72, 0.2);
+            transition: all 0.2s;
+        }
+
+        .player-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .player-text {
+            font-size: 14px;
+            font-weight: bold;
+            color: #be123c;
+            min-width: 150px;
+        }
+
+        /* Стили для падающих сердечек */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) translateX(100px) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop></audio>
+
+    <div id="screen-start" class="card">
+        <h1>Привіт, випускнице! 🎓✨</h1>
+        <p>Щоб дістатися до головного сюрпризу, тобі доведеться згадати кілька шкільних предметів і пройти цей міні-квест. Готова до іспиту?</p>
+        <button onclick="startQuestWithMusic()">Погнали! 💞</button>
+    </div>
+
+    <div id="screen-quest" class="card hidden">
+        <div id="subject-badge" class="subject-badge">Предмет</div>
+        <h2 id="question-text">Текст запитання</h2>
+        <input type="text" id="answer-input" placeholder="Твоя відповідь...">
+        <div id="error-message" class="error-msg">Неправильно, спробуй ще раз! 😘</div>
+        <button onclick="checkAnswer()">Перевірити ✨</button>
+    </div>
+
+    <div id="screen-timer-trigger" class="card hidden">
+        <h1>Останнє запитання 🌟</h1>
+        <p style="font-size: 22px; font-weight: bold; color: #be123c; margin-bottom: 25px;">
+            Хто моя найулюбленіша дівчинка у світі?
+        </p>
+        <button onclick="startCountdown()" style="padding: 15px 45px; font-size: 18px;">Я 💖</button>
+    </div>
+
+    <div id="screen-countdown" class="card hidden">
+        <h1>Рахую секунди до головного...</h1>
+        <div id="timer" class="timer-display">3</div>
+    </div>
+
+    <div id="screen-final" class="card hidden" style="max-width: 750px;">
+        <h1>Вітаю з випускним, кохана! ❤️</h1>
+        <p>Ти пройшла всі випробування, склала всі іспити і тепер крок за кроком ідеш у нове, доросле життя. Я неймовірно тобою пишаюся і завжди буду поруч!</p>
+         
+        <div class="audio-player">
+            <button class="player-btn" onclick="prevTrack()">⏮</button>
+            <button class="player-btn" id="music-btn" onclick="toggleMusic()">⏸</button>
+            <button class="player-btn" onclick="nextTrack()">⏭</button>
+            <span class="player-text" id="music-text">Трек 1 грає ❤️</span>
+        </div>
+
+        <div class="gallery">
+            <img src="photo1.jpg" alt="Наше фото 1">
+            <img src="photo2.jpg" alt="Наше фото 2">
+            <img src="photo3.jpg" alt="Наше фото 3">
+        </div>
+
+        <div class="poem-container">Тут твій гарний вірш для неї.
+Просто заміни цей текст на свої рядки.
+Кожен перенос рядка збережеться,
+тому пиши так, як має виглядати вірш.
+
+З любов'ю!</div>
+    </div>
+
+    <script>
+        // Названия твоих музыкальных файлов в папке
+        const tracks = ["music1.mp3", "music2.mp3", "music3.mp3"];
+        let currentTrackIndex = 0;
+
+        const questData = [
+            {
+                subject: "Українська література",
+                question: "Як називали групу поетів 1920-х років, до якої входили Максим Рильський та Микола Зеров?",
+                answers: ["неокласики", "київські neoкласики", "київські неокласики"] 
+            },
+            {
+                subject: "Алгебра",
+                question: "Як називається лінія на площині, яка є множиною точок, для яких різниця відстаней до двох фокусів є сталою?",
+                answers: ["гіпербола"]
+            },
+            {
+                subject: "Геометрія",
+                question: "Як називається многогранник, дві грані якого — рівні многокутники, що лежать у паралельних площинах, а решта граней — паралелограми?",
+                answers: ["призма"]
+            },
+            {
+                subject: "Фізика",
+                question: "Статичний пристрій, що перетворює змінний струм однієї напруги на змінний струм іншої напруги за допомогою магнітного поля.",
+                answers: ["трансформатор"]
+            },
+            {
+                subject: "Історія України",
+                question: "Хто є автором знаменитих рядків «Ти знаєш, що ти — людина? Знаєш чи ні?»",
+                answers: ["василь симоненко", "симоненко"]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Инициализируем первый трек перед запуском
+        const audio = document.getElementById('bg-music');
+        audio.src = tracks[currentTrackIndex];
+
+        // Запуск квеста вместе с первой песней
+        function startQuestWithMusic() {
+            audio.play().catch(e => console.log("Музика завантажиться після взаємодії"));
+            nextScreen('screen-start', 'screen-quest');
+        }
+
+        document.getElementById('answer-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        function initQuest() {
+            const currentQuest = questData[currentQuestionIndex];
+            document.getElementById('subject-badge').innerText = currentQuest.subject;
+            document.getElementById('question-text').innerText = currentQuest.question;
+            document.getElementById('answer-input').value = "";
+            document.getElementById('error-message').style.display = "none";
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
+            const currentQuest = questData[currentQuestionIndex];
+
+            if (currentQuest.answers.includes(userAnswer)) {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questData.length) {
+                    initQuest();
+                } else {
+                    nextScreen('screen-quest', 'screen-timer-trigger');
+                }
+            } else {
+                document.getElementById('error-message').style.display = "block";
+            }
+        }
+
+        function nextScreen(hideId, showId) {
+            document.getElementById(hideId).classList.add('hidden');
+            document.getElementById(showId).classList.remove('hidden');
+            if (showId === 'screen-quest') {
+                initQuest();
+            }
+            if (showId === 'screen-final') {
+                startHeartsEffect(); 
+            }
+        }
+
+        function startCountdown() {
+            nextScreen('screen-timer-trigger', 'screen-countdown');
+            let timeLeft = 3;
+            const timerElement = document.getElementById('timer');
+             
+            const countdownInterval = setInterval(() => {
+                timeLeft--;
+                timerElement.innerText = timeLeft;
+                 
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    nextScreen('screen-countdown', 'screen-final');
+                }
+            }, 1000);
+        }
+
+        // Обновленная функция управления паузой/плей
+        function toggleMusic() {
+            const btn = document.getElementById('music-btn');
+            const text = document.getElementById('music-text');
+
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Помилка відтворення"));
+                btn.innerText = "⏸";
+                text.innerText = `Трек ${currentTrackIndex + 1} грає ❤️`;
+            } else {
+                audio.pause();
+                btn.innerText = "▶";
+                text.innerText = "Музику призупинено 🎵";
+            }
+        }
+
+        // Переключение на следующий трек
+        function nextTrack() {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            playSelectedTrack();
+        }
+
+        // Переключение на предыдущий трек
+        function prevTrack() {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            playSelectedTrack();
+        }
+
+        // Внутренний метод смены аудиофайла
+        function playSelectedTrack() {
+            audio.src = tracks[currentTrackIndex];
+            audio.play().catch(e => console.log("Помилка завантаження треку"));
+            document.getElementById('music-btn').innerText = "⏸";
+            document.getElementById('music-text').innerText = `Трек ${currentTrackIndex + 1} грає ❤️`;
+        }
+
+        // Функция генерации падающих сердечек
+        function startHeartsEffect() {
+            const heartTypes = ['❤️', '💖', '💕', '🌸', '✨'];
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+                heart.style.opacity = Math.random() * 0.7 + 0.3;
+                heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+                 
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 5000);
+            }, 300);
+        }
+    </script>
+</body>
+</html>
